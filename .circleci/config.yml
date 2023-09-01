@@ -1,6 +1,8 @@
 version: 2.1
 
-commands:
+orbs:
+  # Declare a dependency on the welcome-orb
+  welcome: circleci/welcome-orb@0.4.1
             
 jobs:
   print_hello:
