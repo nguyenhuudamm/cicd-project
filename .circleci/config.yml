@@ -1,27 +1,24 @@
 version: 2.1
-
-orbs:
-  # Declare a dependency on the welcome-orb
-  welcome: circleci/welcome-orb@0.4.1
             
 jobs:
-  print_hello:
+  build-frontend:
     docker:
       - image: circleci/node:13.8.0
     steps:
-      - run: echo hello
-  print_world:
-    docker:
-      - image: circleci/node:13.8.0
-    steps:
-      - run: echo world
+      - checkout
+      - restore_cache:
+          keys: [frontend-build]
+      - run:
+          name: Build front-end
+          command: |
+            cd frontend
+            npm install
+            npm run build
+      - save_cache:
+          paths: [frontend/node_modules]
+          key: frontend-build
 
 workflows:
-  welcome:
-    # Run the welcome/run job in its own container
+  default:
     jobs:
-      - welcome/run
-      - print_hello
-      - print_world:
-          requires:
-            - print_hello
+      - build-frontend
