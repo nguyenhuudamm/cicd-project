@@ -37,7 +37,7 @@
   roles:
     # Your code here
     #- configure-prometheus-node-exporter
-    - configure-server1   # [Thay đổi] thành [configure-server] để chính xác
+    - configure-server   # [Thay đổi] thành [configure-server] để chính xác
 
 ## Chạy lệnh sau 
 ## cd .circleci/ansible
