@@ -1,9 +1,14 @@
 -- key kvdb
-oeedRMjDDNGPEPsRLXdp
+FFoeedRMjDDNGPEPsRLXdp
 -- set value    [set value for key migration_$\{CIRCLE_WORKFLOW_ID:0:7\}  = 1]
-curl https://kvdb.io/oeedRMjDDNGPEPsRLXdp/migration_$\{CIRCLE_WORKFLOW_ID:0:7\} -d '1'
+curl https://kvdb.io/30VaycSPEu1ecHAThcgKqynz/migration_$\{CIRCLE_WORKFLOW_ID:0:7\} -d '1'
 -- get value    [get value from migration_$\{CIRCLE_WORKFLOW_ID:0:7}  =  1]
-curl -- insecure https://kvdb.io/oeedRMjDDNGPEPsRLXdp/migration_$\{CIRCLE_WORKFLOW_ID:0:7\}
+curl -- insecure https://kvdb.io/30VaycSPEu1ecHAThcgKqynz/migration_$\{CIRCLE_WORKFLOW_ID:0:7\}
+
+
+curl https://kvdb.io/FFoeedRMjDDNGPEPsRLXdp/migration_test -d '1'
+curl -- insecure https://kvdb.io/FFoeedRMjDDNGPEPsRLXdp/migration_test
+
 
 circleci/node	Dành cho các ứng dụng mạng và phía máy chủ Node.JS.
 circleci/postgres	Dành cho các tác vụ yêu cầu chức năng cơ sở dữ liệu PostgreSQL.
