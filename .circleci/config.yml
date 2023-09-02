@@ -155,6 +155,7 @@ jobs:
             --filters "Name=tag:Name,Values=udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
             --output text)
             echo "${PUBLIC_IP}" >> ~/project/.circleci/ansible/inventory.txt
+            echo "${PUBLIC_IP}"
             cat .circleci/ansible/inventory.txt
 
       - persist_to_workspace:
