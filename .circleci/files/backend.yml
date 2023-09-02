@@ -1,9 +1,9 @@
 Description: >
-  UdaPeople backend stack.
+  UdaPeople backend stack
 
 Parameters:
   ID:
-    Description: Unique identifier.
+    Description: Unique identifier
     Type: String
 
 Resources:
@@ -11,7 +11,7 @@ Resources:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupName: !Sub UdaPeople-${ID}
-      GroupDescription: Allow port 22 and port 3030.
+      GroupDescription: Allow port 22 and port 3030
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 22
@@ -27,15 +27,15 @@ Resources:
           CidrIp: 0.0.0.0/0
 
   EC2Instance:
-  Type: AWS::EC2::Instance
-  Properties:
-    InstanceType: t2.micro
-    SecurityGroups:
-      - Ref: InstanceSecurityGroup
-    KeyName: udacity  # Thay đổi tên của keypair của bạn
-    # Nếu AMI id này không khả dụng cho bạn, bạn có thể tìm một AMI khác tại (https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/finding-an-ami.html)
-    # Ubuntu 18 hoặc phiên bản cao hơn hoạt động tốt
-    ImageId: ami-053b0d53c279acc90  # Thay đổi AMI id chính xác của bạn
-    Tags:
-      - Key: Name
-        Value: !Sub backend-${ID}
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      SecurityGroups:
+        - Ref: InstanceSecurityGroup
+      KeyName: udacity  # Thay đổi tên của keypair của bạn
+      # Nếu AMI id này không khả dụng cho bạn, bạn có thể tìm một AMI khác tại (https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/finding-an-ami.html)
+      # Ubuntu 18 hoặc phiên bản cao hơn hoạt động tốt
+      ImageId: ami-053b0d53c279acc90  # Thay đổi AMI id chính xác của bạn
+      Tags:
+        - Key: Name
+          Value: !Sub backend-${ID}
