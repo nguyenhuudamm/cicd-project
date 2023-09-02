@@ -312,16 +312,11 @@ jobs:
           name: Install dependencies
           command: |
             apk add --update --no-cache tar gzip nodejs npm aws-cli ansible curl
-      - restore_cache:
-          keys: [backend-build]
       - run:
           name: Deploy backend
           command: |
             cd backend
             npm install
-            npm audit fix --audit-level=critical --force
-            npm audit fix --force
-            npm audit --audit-level=critical
             npm run build
             cd ..
             tar -C backend -czvf artifact.tar.gz .
