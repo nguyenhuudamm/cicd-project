@@ -317,11 +317,9 @@ jobs:
           command: |
             cd backend
             rm package-lock.json
+            rm -rf node_modules
             npm --version
             npm install
-            npm audit fix --audit-level=critical --force
-            npm audit fix --force
-            npm audit --audit-level=critical
             cd ..
             tar -C backend -czvf artifact.tar.gz .
             mkdir -p ~/project/.circleci/ansible/roles/deploy/files/
