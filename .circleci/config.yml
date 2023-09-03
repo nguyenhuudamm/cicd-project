@@ -28,9 +28,14 @@ commands:
       - attach_workspace:
           at: ~/
       - run:
+          name: Install dependencies
+          command: |
+            apk add --update --no-cache tar gzip nodejs npm aws-cli curl
+      - run:
           name: Revert migrations
           when: on_fail
           command: |
+            echo "KVDB: https://kvdb.io/FFoeedRMjDDNGPEPsRLXdp/migration_"<<parameters.workflow_id>>
             SUCCESS=$(curl --insecure  https://kvdb.io/FFoeedRMjDDNGPEPsRLXdp/migration_<<parameters.workflow_id>>)
             if (( $SUCCESS == 1 ));
             then
@@ -173,6 +178,8 @@ jobs:
             echo "Public IP Address: $PUBLIC_IP"
             echo "${PUBLIC_IP}" >> ~/project/.circleci/ansible/inventory.txt
             cat .circleci/ansible/inventory.txt
+
+            return 1
 
       - persist_to_workspace:
           root: ~/
