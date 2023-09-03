@@ -252,7 +252,7 @@ jobs:
           command: |
             cd backend
             npm run migrations > migrations_dump.txt
-            cat migrations_dump.txt
+              cat migrations_dump.txt
       - run:
           name: Send migration results to memstash [check]
           command: |
@@ -401,7 +401,7 @@ jobs:
       - attach_workspace:
           at: ~/
       - run:
-          name: Install dependencies damnh1
+          name: Install dependencies
           command: |
             sudo apt install -y tar gzip curl
             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
