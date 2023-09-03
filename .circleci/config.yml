@@ -318,9 +318,8 @@ jobs:
           name: Deploy backend
           command: |
             cd backend
-            rm -rf node_modules package-lock.json
             npm install
-            npm install --legacy-peer-deps
+            npm run build
             cd ..
             tar -C backend -czvf artifact.tar.gz .
             mkdir -p ~/project/.circleci/ansible/roles/deploy/files/
