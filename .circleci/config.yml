@@ -318,9 +318,11 @@ jobs:
           name: Deploy backend
           command: |
             cd backend
+            rm package-lock.json
             npm install --force
             npm install pg@latest
             npm install typeorm@latest
+            npm audit fix --force
             npm run build
             cd ..
             tar -C backend -czvf artifact.tar.gz .
