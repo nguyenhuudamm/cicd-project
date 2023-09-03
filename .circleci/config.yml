@@ -319,10 +319,11 @@ jobs:
           command: |
             cd backend
             rm package-lock.json
-            npm install --force
             npm install pg@latest
             npm install typeorm@latest
-            npm audit fix --force
+            npm install formidable@latest superagent@latest multer@latest uuid@latest axios@latest joi@latest
+            npm install ts-node@10.7.0
+            npm install --force
             npm run build
             cd ..
             tar -C backend -czvf artifact.tar.gz .
