@@ -401,7 +401,7 @@ jobs:
       - attach_workspace:
           at: ~/
       - run:
-          name: Install dependencies
+          name: Install dependencies damnh1
           command: |
             sudo apt install -y tar gzip curl
             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
