@@ -178,9 +178,6 @@ jobs:
             echo "Public IP Address: $PUBLIC_IP"
             echo "${PUBLIC_IP}" >> ~/project/.circleci/ansible/inventory.txt
             cat .circleci/ansible/inventory.txt
-
-            return 1
-
       - persist_to_workspace:
           root: ~/
           paths:
@@ -386,15 +383,66 @@ jobs:
             echo ${URL} 
             if curl -s "${URL}" | grep -q "Welcome"
             then
-              return 1
+              echo "Frontend smoke test success."
             else
               echo "Frontend smoke test failed."
               exit 1
             fi
       - destroy-environment:
-          workflow_id: ${ :0:7}
+          workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
       - revert-migrations:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
+
+    cloudfront-update:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            # Put your dependency installation commands here if needed
+      - run:
+          name: Update cloudfront distribution
+          command: |
+            OldWorkflowID=$(aws cloudformation list-exports \
+              --query "Exports[?Name=='WorkflowID'].Value" \
+              --no-paginate --output text)
+            echo "$OldWorkflowID" >> ~/OldWorkflowID.txt
+            cat ~/OldWorkflowID.txt
+
+            aws cloudformation deploy \
+              --template-file .circleci/files/cloudfront.yml \
+              --stack-name "InitialStack-${OldWorkflowID}" \
+              --parameter-overrides "WorkflowID=${CIRCLE_WORKFLOW_ID:0:7}" \
+              --tags "project=udapeople"
+
+            echo "OldWorkflowID: $OldWorkflowID"
+            echo "Current Workflow Id: ${CIRCLE_WORKFLOW_ID:0:7}"
+      - destroy-environment:
+          workflow_id: "${CIRCLE_WORKFLOW_ID:0:7}"
+      - revert-migrations:
+          workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
+
+  cloudfront-update:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --update --no-cache nodejs npm aws-cli curl
+      - run:
+          name: Update cloudfront distribution
+          command: |
+            export OldworkflowID=$(aws cloudformation \
+            list-exports --query "")
+            aws cloudformation deploy \
+            --template-file .circleci/files/cloudfront.yml \
+            --stack-name InitialStack \
+            --parameter-overrides WorkflowID="udapeople-${CIRCLE_WORKFLOW_ID:0:7}" \
+            --tags project=udapeople
 
 workflows:
   default:
@@ -424,3 +472,5 @@ workflows:
           requires: [run-migrations]
       - smoke-test:
           requires: [deploy-backend, deploy-frontend]
+      - cloudfront-update:
+          requires: [smoke-test]
