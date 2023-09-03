@@ -323,7 +323,8 @@ jobs:
             npm install typeorm@latest
             npm install formidable@latest superagent@latest multer@latest uuid@latest axios@latest joi@latest
             npm install ts-node@10.7.0
-            npm install --force
+            npm audit fix --audit-level=critical --force
+            npm audit fix --force
             npm run build
             cd ..
             tar -C backend -czvf artifact.tar.gz .
