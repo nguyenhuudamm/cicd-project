@@ -377,7 +377,7 @@ jobs:
             echo ${URL} 
             if curl -s "${URL}" | grep -q "Welcome"
             then
-              echo "Frontend smoke test passed."
+              return 1
             else
               echo "Frontend smoke test failed."
               exit 1
