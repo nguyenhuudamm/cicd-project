@@ -399,7 +399,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install dependencies [r]
+          name: Install dependencies [run]
           command: |
             apk add --update --no-cache tar gzip nodejs npm aws-cli curl
       - run:
