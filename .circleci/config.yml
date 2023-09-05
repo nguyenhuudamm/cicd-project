@@ -400,7 +400,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install dependencies [run]
+          name: Install dependencies [runee]
           command: |
             apk add --update --no-cache tar gzip nodejs npm aws-cli curl
       - run:
