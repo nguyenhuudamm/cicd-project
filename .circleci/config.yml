@@ -37,6 +37,7 @@ commands:
           command: |
             echo "KVDB: https://kvdb.io/VaycSPEu1ecHAThcgKqynz/migration_"<<parameters.workflow_id>>
             SUCCESS=$(curl --insecure  https://kvdb.io/VaycSPEu1ecHAThcgKqynz/migration_<<parameters.workflow_id>>)
+            echo $SUCCESS
             if (( $SUCCESS == 1 ));
             then
               cd ~/project/backend
@@ -325,7 +326,7 @@ jobs:
           name: Deploy backend
           command: |
             cd backend
-            npm install --force
+            #npm install --force
             npm run build
             cd ..
             tar -C backend -czvf artifact.tar.gz .
@@ -385,6 +386,7 @@ jobs:
             if curl -s "${URL}" | grep -q "Welcome"
             then
               echo "Frontend smoke test success."
+              exit 0
             else
               echo "Frontend smoke test failed."
               exit 1
@@ -414,9 +416,9 @@ jobs:
 
             aws cloudformation deploy \
               --template-file .circleci/files/cloudfront.yml \
-              --stack-name "InitialStack-$OldWorkflowID" \
-              --parameter-overrides "WorkflowID=${CIRCLE_WORKFLOW_ID:0:7}" \
-              --tags "project=udapeople"
+              --stack-name InitialStack \
+              --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}" \
+              --tags project=udapeople
 
             echo "OldWorkflowID: $OldWorkflowID"
             echo "Current Workflow Id: ${CIRCLE_WORKFLOW_ID:0:7}"
