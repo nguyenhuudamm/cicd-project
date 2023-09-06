@@ -32,7 +32,7 @@ Resources:
       InstanceType: t2.micro
       SecurityGroups:
         - Ref: InstanceSecurityGroup
-      KeyName: udacity  # Thay đổi tên của keypair của bạn
+      KeyName: prometheus  # Thay đổi tên của keypair của bạn
       # Nếu AMI id này không khả dụng cho bạn, bạn có thể tìm một AMI khác tại (https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/finding-an-ami.html)
       # Ubuntu 18 hoặc phiên bản cao hơn hoạt động tốt
       ImageId: ami-053b0d53c279acc90  # Thay đổi AMI id chính xác của bạn
