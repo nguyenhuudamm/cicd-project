@@ -8,6 +8,19 @@ curl -- insecure https://kvdb.io/30VaycSPEu1ecHAThcgKqynz/migration_$\{CIRCLE_WO
 27d776e
 curl https://kvdb.io/FFoeedRMjDDNGPEPsRLXdp/migration_test -d '1'
 
+
+-----------------------------------------
+---- ssh to EC2 prometheus: [Public IPv4 DNS]
+ssh -i prometheus.pem ubuntu@ec2-3-91-74-147.compute-1.amazonaws.com
+wget https://github.com/prometheus/prometheus/releases/download/v2.19.0/prometheus-2.19.0.linux-amd64.tar.gz
+tar xvfz prometheus-2.19.0.linux-amd64.tar.gz
+cd prometheus-2.19.0.linux-amd64
+./prometheus --version
+---- start 
+./prometheus --config.file=./prometheus.yml
+---- connect to server prometheus [Public IPv4 address]
+http://34.207.240.68:9090/graph
+
 circleci/node	Dành cho các ứng dụng mạng và phía máy chủ Node.JS.
 circleci/postgres	Dành cho các tác vụ yêu cầu chức năng cơ sở dữ liệu PostgreSQL.
 circleci/python	Đối với công việc cần chạy Python hoặc pip.
