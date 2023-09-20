@@ -2,11 +2,11 @@ const { Client } = require('pg');
 
 // Thay đổi các thông tin kết nối theo cấu hình của bạn
 const dbConfig = {
-  user: 'myPostgres',
-  password: 'myPostgres',
-  host: 'mypostgres.cl8d1ofvgo48.us-east-1.rds.amazonaws.com',
+  user: 'mypostgre2',
+  password: 'mypostgre2',
+  host: 'mypostgre2.cl8d1ofvgo48.us-east-1.rds.amazonaws.com',
   port: 5432,
-  database: 'myPostgres',
+  database: 'mypostgre2',
 };
 
 const client = new Client(dbConfig);

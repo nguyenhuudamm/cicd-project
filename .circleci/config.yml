@@ -385,8 +385,8 @@ jobs:
             echo ${URL} 
             if curl -s "${URL}" | grep -q "Welcome"
             then
-              echo "Frontend smoke test success."
-              exit 0
+              echo "Frontend smoke test failed [screenshoot7]."
+              exit 1
             else
               echo "Frontend smoke test failed."
               exit 1
@@ -444,7 +444,7 @@ workflows:
           requires: [test-frontend, test-backend, scan-frontend, scan-backend]
           filters:
             branches:
-              only: [main]
+              only: [dev]
       - configure-infrastructure:
           requires: [deploy-infrastructure]
       - run-migrations:

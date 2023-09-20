@@ -1,0 +1,11 @@
+groups:
+  - name: AllInstances:
+    rules:
+    - alert: UsingTooMuchMemory
+      expr: node_memory_MemFree_bytes < 10000
+      for: 1m
+      annotations:
+        title: 'Instance ${{ $label.instance }} is almost out of memory'
+        description: 'Help me .......'
+      labels:
+        severity: 'critical'
