@@ -10,7 +10,7 @@ curl https://kvdb.io/FFoeedRMjDDNGPEPsRLXdp/migration_test -d '1'
 
 
 -----------------------------------------
----- ssh to EC2 prometheus: [Public IPv4 DNS]
+---- ssh to EC2 prometheus: [Public IPv4 DNS của EC2 Prometheus]
 ssh -i prometheus.pem ubuntu@ec2-3-91-74-147.compute-1.amazonaws.com
 wget https://github.com/prometheus/prometheus/releases/download/v2.19.0/prometheus-2.19.0.linux-amd64.tar.gz
 tar xvfz prometheus-2.19.0.linux-amd64.tar.gz
@@ -19,7 +19,46 @@ cd prometheus-2.19.0.linux-amd64
 ---- start 
 ./prometheus --config.file=./prometheus.yml
 ---- connect to server prometheus [Public IPv4 address]
+---- config
+cd prometheus-2.19.0.linux-amd64
+nano prometheus.yml
+- job_name: 'node'
+  static_configs:
+  - targets: ['Public IPv4 DNS của EC2 Backend:9100']
+
+---- alert
+cd prometheus-2.19.0.linux-amd64
+nano rule.yml
+    groups:
+    - name: AllInstances:
+      rules:
+      - alert: UsingTooMuchMemory
+        expr: node_memory_MemFree_bytes < 10000
+        for: 1m
+        annotations:
+          title: 'Instance is almost out of memory'
+          description: 'Help me'
+        labels:
+          severity: 'critical'
+
+          
 http://34.207.240.68:9090/graph
+
+---- ssh to EC2 prometheus: [Public IPv4 DNS của EC2 Backend]
+wget https://github.com/prometheus/node_exporter/releases/download/v1.0.1/node_exporter-1.0.1.linux-amd64.tar.gz
+tar xvfz node_exporter-1.0.1.linux-amd64.tar.gz
+cd node_exporter-1.0.1.linux-amd64
+./node_exporter
+
+------
+node_memory_MemFree_bytes
+
+
+
+
+
+
+
 
 circleci/node	Dành cho các ứng dụng mạng và phía máy chủ Node.JS.
 circleci/postgres	Dành cho các tác vụ yêu cầu chức năng cơ sở dữ liệu PostgreSQL.
