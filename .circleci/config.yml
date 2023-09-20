@@ -41,8 +41,8 @@ commands:
             if (( $SUCCESS == 1 ));
             then
               cd ~/project/backend
-              npm run build
-              npm run migration:revert
+              npm install
+              npm run migrations:revert
             fi
 
 jobs:
