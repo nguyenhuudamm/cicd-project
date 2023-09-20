@@ -1,12 +1,27 @@
 -- key kvdb
 FFoeedRMjDDNGPEPsRLXdp
 -- set value    [set value for key migration_$\{CIRCLE_WORKFLOW_ID:0:7\}  = 1]
-curl https://kvdb.io/30VaycSPEu1ecHAThcgKqynz/migration_$\{CIRCLE_WORKFLOW_ID:0:7\} -d '1'
+curl https://kvdb.io/VaycSPEu1ecHAThcgKqynz/migration_$\{CIRCLE_WORKFLOW_ID:0:7\} -d '1'
 -- get value    [get value from migration_$\{CIRCLE_WORKFLOW_ID:0:7}  =  1]
-curl -- insecure https://kvdb.io/30VaycSPEu1ecHAThcgKqynz/migration_$\{CIRCLE_WORKFLOW_ID:0:7\}
+curl -- insecure https://kvdb.io/VaycSPEu1ecHAThcgKqynz/migration_$\{CIRCLE_WORKFLOW_ID:0:7\}
 
 27d776e
 curl https://kvdb.io/FFoeedRMjDDNGPEPsRLXdp/migration_test -d '1'
+
+
+--- Setting environment in circleci
+AWS_ACCESS_KEY_ID=>>>>>>>>>>>>>>>>>>>>>
+AWS_SECRET_ACCESS_KEY=>>>>>>>>>>>>>>>>>>>>>
+AWS_DEFAULT_REGION=>>>>>>>>>>>>>>>>>>>>>
+TYPEORM_CONNECTION=postgres
+TYPEORM_MIGRATIONS_DIR=./src/migrations
+TYPEORM_ENTITIES=./src/modules/domain/**/*.entity.ts
+TYPEORM_MIGRATIONS=./src/migrations/*.ts
+TYPEORM_HOST=>>>>>>>>>>>>>>>>>>>>>
+TYPEORM_PORT=5432
+TYPEORM_USERNAME=>>>>>>>>>>>>>>>>>>>>>
+TYPEORM_PASSWORD=>>>>>>>>>>>>>>>>>>>>>
+TYPEORM_DATABASE=>>>>>>>>>>>>>>>>>>>>>
 
 
 

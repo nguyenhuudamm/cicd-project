@@ -37,11 +37,12 @@ commands:
           command: |
             echo "KVDB: https://kvdb.io/VaycSPEu1ecHAThcgKqynz/migration_"<<parameters.workflow_id>>
             SUCCESS=$(curl --insecure  https://kvdb.io/VaycSPEu1ecHAThcgKqynz/migration_<<parameters.workflow_id>>)
-            echo $SUCCESS
-            if (( $SUCCESS == 1 ));
-            then
+            echo "KVDB value: $SUCCESS"
+            echo "Run migrations revert ....."
+            if [ "${SUCCESS}" -eq 1 ]; then
               cd ~/project/backend
               npm install
+              npm run build
               npm run migrations:revert
             fi
 
