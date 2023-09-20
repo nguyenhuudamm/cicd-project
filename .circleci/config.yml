@@ -392,7 +392,7 @@ jobs:
             if curl -s "${URL}" | grep -q "Welcome"
             then
               echo "Frontend smoke test failed [screenshoot7]."
-              exit 1
+              exit 0
             else
               echo "Frontend smoke test failed."
               exit 1
@@ -432,6 +432,34 @@ jobs:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
       - revert-migrations:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
+
+  cleanup:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Fetching OldStack Workflow ID
+          command: |
+            echo "I temporarily disable these command below, it will be uncommented once pass the review phase"
+            export OldWorkflowID=$(aws cloudformation \
+            list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
+            --no-paginate --output text)
+            echo OldWorkflowID: "${OldWorkflowID}"
+            echo "Current Workflow Id: ${CIRCLE_WORKFLOW_ID:0:7}"
+            export STACKS=($(aws cloudformation list-stacks --query "StackSummaries[*].StackName" \
+            --stack-status-filter CREATE_COMPLETE --no-paginate --output text))
+            echo Stack names: "${STACKS[@]}"
+            if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
+            then
+              echo "Start cleanup"
+              aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
+              aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}"
+              aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}"
+              echo "Start success"
+            else
+              echo "Cleanup failed"
+            fi
 
 workflows:
   default:
