@@ -378,6 +378,7 @@ jobs:
             if curl "${API_URL}/api/status" | grep -q "ok"
             then
               echo "Backend smoke test passed."
+              exit 0
             else
               echo "Backend smoke test failed."
               exit 1
